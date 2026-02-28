@@ -102,3 +102,4 @@ assets/icon_png.ico     - Icône de jif_to_png.exe
 
 - L'attribut `#![windows_subsystem = "windows"]` dans `lib.rs` empêche l'ouverture d'une console. Si vous avez besoin de debug, vous pouvez le retirer temporairement ou le remplacer par `"console"`.
 - Les icônes sont intégrées aux exe via `windres` (MinGW). Le `build.rs` ne les applique que quand la target est Windows, donc la compilation Linux fonctionne sans problème.
+- La crate `image` est importée avec uniquement les features `jpeg`, `png` et `webp` pour limiter la taille des binaires. Le profil release active LTO, strip des symboles, et `panic = "abort"` pour réduire encore la taille (~700 Ko par exe).

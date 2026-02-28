@@ -12,4 +12,11 @@ name = "jif_to_png"
 path = "src/bin/jif_to_png.rs"
 
 [dependencies]
-image = "0.25"
+image = { version = "0.25", default-features = false, features = ["jpeg", "png", "webp"] }
+
+[profile.release]
+opt-level = "z"       # optimise pour la taille
+lto = true            # link-time optimization
+codegen-units = 1     # meilleure optimisation
+panic = "abort"       # pas de code d'unwinding
+strip = true          # supprime les symboles de debug
