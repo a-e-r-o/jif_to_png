@@ -1,6 +1,6 @@
 # jif_to_jpg / jif_to_png
 
-> Ce document a été généré par Copilot (Claude Opus 4.6).
+> Le code et les assets de ce projet, ainsi que ce README ont été générés par Copilot (Claude Opus 4.6).
 
 ## Description
 
