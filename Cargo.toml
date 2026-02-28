@@ -1,0 +1,15 @@
+[package]
+name = "jif_to_jpg"
+version = "0.1.0"
+edition = "2021"
+
+[[bin]]
+name = "jif_to_jpg"
+path = "src/bin/jif_to_jpg.rs"
+
+[[bin]]
+name = "jif_to_png"
+path = "src/bin/jif_to_png.rs"
+
+[dependencies]
+image = "0.25"
