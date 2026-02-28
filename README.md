@@ -4,9 +4,12 @@
 
 ## Description
 
-Deux utilitaires en Rust qui convertissent les fichiers `.jif` du répertoire courant.
+Deux utilitaires en Rust qui convertissent les fichiers `.jif` et `.webp` du répertoire courant.
 
-Les fichiers JIF sont en réalité des fichiers JPEG (format JFIF) avec une extension différente. Les programmes les décodent et les ré-enregistrent dans le format choisi. Après une conversion réussie, le fichier `.jif` source est supprimé.
+- Les fichiers JIF sont des fichiers JPEG (format JFIF) avec une extension différente.
+- Les fichiers WEBP sont décodés nativement.
+
+Les programmes décodent ces fichiers et les ré-enregistrent dans le format choisi. Après une conversion réussie, le fichier source est supprimé.
 
 - **jif_to_jpg** : convertit en JPEG qualité 95%.
 - **jif_to_png** : convertit en PNG (lossless).
@@ -14,12 +17,12 @@ Les fichiers JIF sont en réalité des fichiers JPEG (format JFIF) avec une exte
 ## Comportement
 
 - Le programme scanne le répertoire depuis lequel il est lancé.
-- Il cherche tous les fichiers avec l'extension `.jif` (insensible à la casse).
+- Il cherche tous les fichiers `.jif` et `.webp` (insensible à la casse).
 - Chaque fichier est converti en `.jpg` ou `.png` selon le programme utilisé.
-- Si la conversion réussit, le `.jif` est supprimé.
+- Si la conversion réussit, le fichier source est supprimé.
 - Sur Windows, aucune fenêtre console ne s'ouvre : le programme s'exécute et se ferme silencieusement.
 
-En pratique, il suffit de déposer l'exécutable dans un dossier contenant des fichiers `.jif` et de le lancer.
+En pratique, il suffit de déposer l'exécutable dans un dossier contenant des fichiers `.jif` ou `.webp` et de le lancer.
 
 ## Prérequis
 

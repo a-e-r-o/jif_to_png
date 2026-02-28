@@ -30,7 +30,9 @@ pub fn convert_all(format: OutputFormat) {
         .filter(|e| {
             e.path()
                 .extension()
-                .map(|ext| ext.eq_ignore_ascii_case("jif"))
+                .map(|ext| {
+                    ext.eq_ignore_ascii_case("jif") || ext.eq_ignore_ascii_case("webp")
+                })
                 .unwrap_or(false)
         })
         .collect();
@@ -49,12 +51,19 @@ pub fn convert_all(format: OutputFormat) {
     }
 }
 
+fn detect_format(path: &Path) -> ImageFormat {
+    match path.extension().and_then(|e| e.to_str()).unwrap_or("").to_ascii_lowercase().as_str() {
+        "webp" => ImageFormat::WebP,
+        _ => ImageFormat::Jpeg, // .jif = JPEG (JFIF)
+    }
+}
+
 fn convert(input: &Path, output: &Path, format: &OutputFormat) -> Result<(), Box<dyn std::error::Error>> {
     let file = fs::File::open(input)?;
     let reader = BufReader::new(file);
 
-    // .jif est un format JPEG (JFIF), on force le décodage en JPEG
-    let img = image::load(reader, ImageFormat::Jpeg)?;
+    let input_format = detect_format(input);
+    let img = image::load(reader, input_format)?;
 
     match format {
         OutputFormat::Jpg(quality) => {
