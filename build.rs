@@ -10,8 +10,7 @@ fn main() {
 
     let out_dir = env::var("OUT_DIR").unwrap();
 
-    compile_icon(&out_dir, "jif_to_jpg", "assets/icon_jpg.ico");
-    compile_icon(&out_dir, "jif_to_png", "assets/icon_png.ico");
+    compile_icon(&out_dir, "quick_img_convert", "assets/icon.ico");
 }
 
 fn compile_icon(out_dir: &str, bin_name: &str, icon_path: &str) {
