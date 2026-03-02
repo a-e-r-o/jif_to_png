@@ -4,7 +4,7 @@ use eframe::egui;
 use quick_img_convert::OutputFormat;
 
 fn load_icon() -> egui::IconData {
-    let png_bytes = include_bytes!("../../assets/Untitled.png");
+    let png_bytes = include_bytes!("../../assets/icon.png");
     let img = image::load_from_memory(png_bytes).expect("Failed to load icon").into_rgba8();
     let (w, h) = img.dimensions();
     egui::IconData {
@@ -31,16 +31,35 @@ fn main() -> eframe::Result {
     )
 }
 
-#[derive(Default)]
 struct App {
     format_idx: usize,
     status: Option<String>,
+    quit_at: Option<std::time::Instant>,
+}
+
+impl Default for App {
+    fn default() -> Self {
+        Self {
+            format_idx: 0,
+            status: None,
+            quit_at: None,
+        }
+    }
 }
 
 const FORMATS: [&str; 2] = ["PNG (lossless)", "JPG (qualité 95%)"];
 
 impl eframe::App for App {
     fn update(&mut self, ctx: &egui::Context, _frame: &mut eframe::Frame) {
+        // Fermeture automatique après délai
+        if let Some(quit_at) = self.quit_at {
+            if std::time::Instant::now() >= quit_at {
+                ctx.send_viewport_cmd(egui::ViewportCommand::Close);
+            } else {
+                ctx.request_repaint_after(std::time::Duration::from_millis(100));
+            }
+        }
+
         egui::CentralPanel::default().show(ctx, |ui| {
             ui.heading("QuickImgConvert");
             ui.add_space(10.0);
@@ -70,6 +89,8 @@ impl eframe::App for App {
                         output_format.extension()
                     )
                 });
+                // Fermer automatiquement après 2 secondes
+                self.quit_at = Some(std::time::Instant::now() + std::time::Duration::from_secs(2));
             }
 
             if let Some(ref status) = self.status {
